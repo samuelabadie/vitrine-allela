@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import ServiceCard from '@/components/ServiceCard';
+import services from '@/data/services.json';
 
 export default function AllComponentsPage() {
   return (
@@ -12,11 +14,8 @@ export default function AllComponentsPage() {
           <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Button Variants</h2>
           <div className="flex flex-wrap gap-4 mb-4">
             <Button variant="default">Default</Button>
-            <Button variant="destructive">Destructive</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="ghost">Ghost</Button>
             <Button variant="link">Link</Button>
+            <Button variant="orange">Orange</Button>
           </div>
           <div className="flex flex-wrap gap-4">
             <Button size="sm">Small</Button>
@@ -35,6 +34,15 @@ export default function AllComponentsPage() {
             <Badge>Default</Badge>
             <Badge variant="orange">Orange</Badge>
             <Badge topRightIcon="/assets/icons/short-icon.svg">Badge with Icon</Badge>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 text-blue-700">Card</h2>
+          <div className="space-y-12">
+            {services.map((service, idx) => (
+              <ServiceCard key={idx} {...service} />
+            ))}
           </div>
         </section>
       </div>

@@ -15,7 +15,7 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const base =
-    "inline-block rounded-full px-[20px] py-[12px] text-white text-[14px] font-bold text-center relative";
+    "inline-block rounded-full px-[20px] py-[8px] text-white text-[14px] font-medium text-center relative";
   const variants = {
     default:
       "bg-gradient-to-br from-[#4D4D4D] to-[#1E1E1E]",
@@ -29,7 +29,7 @@ export function Badge({
     >
       {children}
       {topRightIcon && (
-        <div className="absolute -top-2 -right-2 w-6 h-6 -rotate-[10deg]">
+        <div className="absolute -top-3 -right-3 w-auto h-8 -rotate-[10deg]">
           <Image
             src={topRightIcon}
             alt="Badge icon"

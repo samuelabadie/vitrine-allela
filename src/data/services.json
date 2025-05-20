@@ -1,0 +1,32 @@
+[
+  {
+    "icon": "/assets/icons/short-icon.svg",
+    "title": "Création vidéo",
+    "badges": [
+      { "label": "shorts", "icon": "/assets/icons/youtube-icon.svg" },
+      { "label": "reels", "icon": "/assets/icons/instagram-icon.svg" },
+      { "label": "tik tok", "icon": "/assets/icons/tiktok-icon.svg" },
+      { "label": "youtube", "icon": "/assets/icons/youtube-icon.svg" }
+    ],
+    "description": "(description) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius elementum tristique. Duis cursus, mi quis viverra ut commodo diam libero vitae erat."
+  },
+  {
+    "icon": "/assets/icons/youtube-icon.svg",
+    "title": "Création graphique",
+    "badges": [
+      { "label": "posts", "icon": "/assets/icons/instagram-icon.svg" },
+      { "label": "affiches" },
+      { "label": "bannières" },
+      { "label": "maquettes web" }
+    ],
+    "description": "Nous réalisons des vidéos engageantes pour vos réseaux sociaux et plateformes vidéo."
+  },
+  {
+    "icon": "/assets/icons/instagram-icon.svg",
+    "title": "Création de landing page",
+    "badges": [
+      { "label": "site vitrine" }
+    ],
+    "description": "Création de landing pages modernes et performantes pour convertir vos visiteurs en clients."
+  }
+] 
