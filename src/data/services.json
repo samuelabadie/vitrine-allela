@@ -28,5 +28,36 @@
       { "label": "site vitrine" }
     ],
     "description": "Création de landing pages modernes et performantes pour convertir vos visiteurs en clients."
+  },
+  {
+    "icon": "/assets/icons/instagram-icon.svg",
+    "title": "Animation et présentation",
+    "badges": [
+      { "label": "micro-trottoir" },
+      { "label": "évènements" },
+      { "label": "concepts originaux"}
+    ],
+    "description": "Création de landing pages modernes et performantes pour convertir vos visiteurs en clients."
+  },
+  {
+    "icon": "/assets/icons/instagram-icon.svg",
+    "title": "Création d’identité",
+    "badges": [
+      { "label": "rédaction" },
+      { "label": "slogan" },
+      { "label": "charte graphique"},
+      { "label": "logo"}
+    ],
+    "description": "Création de landing pages modernes et performantes pour convertir vos visiteurs en clients."
+  },
+  {
+    "icon": "/assets/icons/instagram-icon.svg",
+    "title": "Photographie",
+    "badges": [
+      { "label": "événements" },
+      { "label": "posts" },
+      { "label": "présentation"}
+    ],
+    "description": "Création de landing pages modernes et performantes pour convertir vos visiteurs en clients."
   }
 ] 

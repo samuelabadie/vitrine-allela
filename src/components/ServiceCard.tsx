@@ -15,8 +15,8 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ icon, title, badges, description }: ServiceCardProps) {
   return (
-    <div className="p-[2px] rounded-2xl bg-gradient-to-br from-[#EBEBEB] to-[#C4C4C4]">
-      <div className="bg-white/80 rounded-[inherit] p-8 max-w-3xl mx-auto shadow-sm">
+    <div className="p-[1px] rounded-2xl max-w-2xl bg-gradient-to-br from-[#EBEBEB] to-[#C4C4C4]">
+      <div className="bg-white/80 rounded-[inherit] p-8 mx-auto shadow-sm">
         <div className="flex items-center gap-6 mb-6">
           <div className="flex-shrink-0">
             <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-4 flex items-center justify-center" style={{ width: 80, height: 80 }}>
@@ -25,7 +25,7 @@ export default function ServiceCard({ icon, title, badges, description }: Servic
           </div>
           <h2 className="text-3xl font-semibold text-black">{title}</h2>
         </div>
-        <div className="flex flex-wrap gap-6 mb-6">
+        <div className="flex flex-wrap gap-4 mb-6">
           {badges.map((badge) => (
             <div key={badge.label} className="relative flex items-center">
               <Badge topRightIcon={badge.icon}>
