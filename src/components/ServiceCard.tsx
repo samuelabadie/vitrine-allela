@@ -26,7 +26,7 @@ export default function ServiceCard({ icon, title, badges, description }: Servic
           <h2 className="text-3xl font-semibold text-black">{title}</h2>
         </div>
         <div className="flex flex-wrap gap-6 mb-6">
-          {badges.map((badge, idx) => (
+          {badges.map((badge) => (
             <div key={badge.label} className="relative flex items-center">
               <Badge topRightIcon={badge.icon}>
                 {badge.label}

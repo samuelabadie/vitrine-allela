@@ -6,7 +6,7 @@ import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import services from "@/data/services.json";
 import { useRef, useEffect } from 'react';
-import { animateHeroTitle, animateBaselineText } from '@/lib/animations';
+import { animateHeroTitle } from '@/lib/animations';
 
 export default function Home() {
   const h1Ref = useRef<HTMLHeadingElement>(null);
