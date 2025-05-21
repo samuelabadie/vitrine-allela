@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="min-h-screen relative flex items-center">
+      <div className="min-h-screen relative flex items-center bg-black-900">
         <UnicornStudioBackground />
         <section id="hero" className="relative z-10 w-full">
           <div className="max-w-3xl pl-8 md:pl-24 py-24 flex flex-col gap-6">
@@ -36,9 +36,11 @@ export default function Home() {
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius elementum tristique. Duis cursus, mi quis viverra ut commodo diam libero vitae erat.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4 items-center">
-                <Button size="lg" variant="orange">
-                  Réserver un appel <Phone className="w-5 h-5 ml-2" />
-                </Button>
+                <Link href="/contact">
+                  <Button size="lg" variant="orange">
+                    Réserver un appel <Phone className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
                 <Link href="/contact" className="flex items-center gap-2 text-base font-bold text-white no-underline">
                   Nous contacter <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
@@ -48,23 +50,27 @@ export default function Home() {
         </section>
       </div>
       {/* Services Section */}
-      <section id="services" className="relative flex justify-center bg-white py-32 min-h-[100vh]">
-        <div className="flex w-full max-w-7xl gap-16">
-          {/* Fixed Left Block */}
-          <div className="w-full max-w-md">
-            <div className="sticky top-[120px] flex flex-col gap-6 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
-              <h2 className="text-4xl font-bold text-black">Nos services</h2>
-              <p className="text-gray-500 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius elementum tristique. Duis cursus, mi quis viverra ut commodo diam libero vitae erat.</p>
-              <Button size="lg" variant="orange">
-                Réserver un appel <Phone className="w-5 h-5 ml-2" />
-              </Button>
+      <section id="services" className="relative bg-white py-32">
+        <div className="container mx-auto">
+          <div className="flex w-full max-w-7xl mx-auto gap-16">
+            {/* Fixed Left Block */}
+            <div className="w-full max-w-md">
+              <div className="sticky top-[140px] flex flex-col gap-6 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
+                <h2 className="text-4xl font-bold text-black">Nos services</h2>
+                <p className="text-gray-500 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius elementum tristique. Duis cursus, mi quis viverra ut commodo diam libero vitae erat.</p>
+                <Link href="/contact">
+                  <Button size="lg" variant="orange">
+                    Réserver un appel <Phone className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-          {/* Services Cards */}
-          <div className="flex-1 flex flex-col gap-8">
-            {services.map((service, idx) => (
-              <ServiceCard key={idx} {...service} />
-            ))}
+            {/* Services Cards */}
+            <div className="flex-1 flex flex-col gap-8">
+              {services.map((service, idx) => (
+                <ServiceCard key={idx} {...service} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
