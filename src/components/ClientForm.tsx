@@ -96,11 +96,11 @@ export default function ClientForm() {
       case 1:
         return (
           <section className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">Informations de l'entreprise</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Informations de l&apos;entreprise</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nom de l'entreprise *
+                  Nom de l&apos;entreprise *
                 </label>
                 <Input
                   id="companyName"

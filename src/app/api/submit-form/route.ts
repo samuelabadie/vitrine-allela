@@ -1,12 +1,14 @@
-import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
-
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
+import { supabase } from '@/lib/supabase';
 
 export async function POST(request: Request) {
+  if (!request.body) {
+    return NextResponse.json(
+      { error: 'Request body is required' },
+      { status: 400 }
+    );
+  }
+
   try {
     const formData = await request.json();
 
@@ -21,7 +23,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Insert form data into Supabase
     const { data, error } = await supabase
       .from('client_submissions')
       .insert([
@@ -41,21 +42,25 @@ export async function POST(request: Request) {
           created_at: new Date().toISOString(),
         },
       ])
-      .select();
+      .select()
+      .single();
 
     if (error) {
       console.error('Supabase error:', error);
       return NextResponse.json(
-        { error: 'Failed to submit form' },
+        { error: 'Failed to submit form', details: error.message },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({ success: true, data });
+    return NextResponse.json(
+      { message: 'Form submitted successfully', data },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Form submission error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
