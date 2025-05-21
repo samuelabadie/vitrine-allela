@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { Badge } from './ui/badge';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface FormData {
@@ -36,7 +35,7 @@ const initialFormData: FormData = {
 };
 
 const steps = [
-  { id: 1, title: 'Informations de l\'entreprise' },
+  { id: 1, title: 'Informations de l&apos;entreprise' },
   { id: 2, title: 'Informations de contact' },
   { id: 3, title: 'Détails du projet' },
   { id: 4, title: 'Description du projet' },
@@ -336,7 +335,7 @@ export default function ClientForm() {
         
         {submitStatus === 'error' && (
           <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg">
-            Une erreur est survenue lors de l'envoi du formulaire. Veuillez réessayer.
+            Une erreur est survenue lors de l&apos;envoi du formulaire. Veuillez réessayer.
           </div>
         )}
 
