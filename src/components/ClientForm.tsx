@@ -454,7 +454,7 @@ export default function ClientForm() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900">Formulaire de Contact (optionnel)</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900">Prendre contact</h2>
         <p className="text-sm text-gray-500 mb-12 max-w-sm">Remplissez ce formulaire pour nous présenter votre projet. Nous vous recontacterons dans les plus brefs délais pour organiser un appel.</p>
         {/* Progress Steps */}
         <div className="mb-8">
