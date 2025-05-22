@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning={true}>
         <NavbarWrapper />
         <main className="relative">
           {children}

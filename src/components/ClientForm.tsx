@@ -16,9 +16,77 @@ interface FormData {
   budget: string;
   timeline: string;
   description: string;
-  requirements: string;
   additionalInfo: string;
 }
+
+interface FormErrors {
+  companyName?: string;
+  contactName?: string;
+  email?: string;
+  phone?: string;
+  website?: string;
+  projectType?: string;
+  budget?: string;
+  timeline?: string;
+  description?: string;
+}
+
+const validateEmail = (email: string): boolean => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+const validatePhone = (phone: string): boolean => {
+  if (!phone) return true; // Phone is optional
+  const phoneRegex = /^(\+33|0)[1-9](\d{2}){4}$/;
+  return phoneRegex.test(phone.replace(/\s/g, ''));
+};
+
+const validateWebsite = (website: string): boolean => {
+  if (!website) return true; // Website is optional
+  const websiteRegex = /^(https?:\/\/)?(www\.)?[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
+  return websiteRegex.test(website);
+};
+
+const validateForm = (formData: FormData): FormErrors => {
+  const errors: FormErrors = {};
+
+  if (!formData.companyName.trim()) {
+    errors.companyName = 'Le nom de l\'entreprise est requis';
+  }
+
+  if (!formData.contactName.trim()) {
+    errors.contactName = 'Le nom du contact est requis';
+  }
+
+  if (!formData.email.trim()) {
+    errors.email = 'L\'email est requis';
+  } else if (!validateEmail(formData.email)) {
+    errors.email = 'Format d\'email invalide';
+  }
+
+  if (formData.phone && !validatePhone(formData.phone)) {
+    errors.phone = 'Format de numéro de téléphone invalide (ex: +33 6 00 00 00 00)';
+  }
+
+  if (formData.website && !validateWebsite(formData.website)) {
+    errors.website = 'Format d\'URL invalide';
+  }
+
+  if (!formData.projectType) {
+    errors.projectType = 'Le type de projet est requis';
+  }
+
+  if (!formData.timeline) {
+    errors.timeline = 'Le délai est requis';
+  }
+
+  if (!formData.description.trim()) {
+    errors.description = 'La description du projet est requise';
+  }
+
+  return errors;
+};
 
 const initialFormData: FormData = {
   companyName: '',
@@ -30,12 +98,11 @@ const initialFormData: FormData = {
   budget: '',
   timeline: '',
   description: '',
-  requirements: '',
   additionalInfo: '',
 };
 
 const steps = [
-  { id: 1, title: 'Informations de l&apos;entreprise' },
+  { id: 1, title: 'Informations de l\'entreprise' },
   { id: 2, title: 'Informations de contact' },
   { id: 3, title: 'Détails du projet' },
   { id: 4, title: 'Description du projet' },
@@ -43,6 +110,7 @@ const steps = [
 
 export default function ClientForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [errors, setErrors] = useState<FormErrors>({});
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -55,10 +123,78 @@ export default function ClientForm() {
       ...prev,
       [name]: value
     }));
+    // Clear error when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
+  };
+
+  const validateStep = (step: number): boolean => {
+    const stepErrors: FormErrors = {};
+    let isValid = true;
+
+    switch (step) {
+      case 1:
+        if (!formData.companyName.trim()) {
+          stepErrors.companyName = 'Le nom de l\'entreprise est requis';
+          isValid = false;
+        }
+        if (formData.website && !validateWebsite(formData.website)) {
+          stepErrors.website = 'Format d\'URL invalide';
+          isValid = false;
+        }
+        break;
+      case 2:
+        if (!formData.contactName.trim()) {
+          stepErrors.contactName = 'Le nom du contact est requis';
+          isValid = false;
+        }
+        if (!formData.email.trim()) {
+          stepErrors.email = 'L\'email est requis';
+          isValid = false;
+        } else if (!validateEmail(formData.email)) {
+          stepErrors.email = 'Format d\'email invalide';
+          isValid = false;
+        }
+        if (formData.phone && !validatePhone(formData.phone)) {
+          stepErrors.phone = 'Format de numéro de téléphone invalide';
+          isValid = false;
+        }
+        break;
+      case 3:
+        if (!formData.projectType) {
+          stepErrors.projectType = 'Le type de projet est requis';
+          isValid = false;
+        }
+        if (!formData.timeline) {
+          stepErrors.timeline = 'Le délai est requis';
+          isValid = false;
+        }
+        break;
+      case 4:
+        if (!formData.description.trim()) {
+          stepErrors.description = 'La description du projet est requise';
+          isValid = false;
+        }
+        break;
+    }
+
+    setErrors(prev => ({ ...prev, ...stepErrors }));
+    return isValid;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const formErrors = validateForm(formData);
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -75,6 +211,7 @@ export default function ClientForm() {
       
       setSubmitStatus('success');
       setFormData(initialFormData);
+      setErrors({});
     } catch (error) {
       console.error('Erreur lors de la soumission du formulaire:', error);
       setSubmitStatus('error');
@@ -84,7 +221,9 @@ export default function ClientForm() {
   };
 
   const nextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, steps.length));
+    if (validateStep(currentStep)) {
+      setCurrentStep(prev => Math.min(prev + 1, steps.length));
+    }
   };
 
   const prevStep = () => {
@@ -96,7 +235,7 @@ export default function ClientForm() {
       case 1:
         return (
           <section className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">Informations de l&apos;entreprise</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Informations de l'entreprise</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -109,7 +248,11 @@ export default function ClientForm() {
                   onChange={handleChange}
                   required
                   placeholder="Entrez le nom de votre entreprise"
+                  className={errors.companyName ? 'border-red-500' : ''}
                 />
+                {errors.companyName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.companyName}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
@@ -122,7 +265,11 @@ export default function ClientForm() {
                   value={formData.website}
                   onChange={handleChange}
                   placeholder="https://exemple.com"
+                  className={errors.website ? 'border-red-500' : ''}
                 />
+                {errors.website && (
+                  <p className="mt-1 text-sm text-red-500">{errors.website}</p>
+                )}
               </div>
             </div>
           </section>
@@ -143,7 +290,11 @@ export default function ClientForm() {
                   onChange={handleChange}
                   required
                   placeholder="Nom complet"
+                  className={errors.contactName ? 'border-red-500' : ''}
                 />
+                {errors.contactName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.contactName}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -157,7 +308,11 @@ export default function ClientForm() {
                   onChange={handleChange}
                   required
                   placeholder="email@entreprise.com"
+                  className={errors.email ? 'border-red-500' : ''}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
@@ -170,7 +325,11 @@ export default function ClientForm() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+33 6 00 00 00 00"
+                  className={errors.phone ? 'border-red-500' : ''}
                 />
+                {errors.phone && (
+                  <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                )}
               </div>
             </div>
           </section>
@@ -190,35 +349,40 @@ export default function ClientForm() {
                   value={formData.projectType}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  className={`w-full rounded-md border ${errors.projectType ? 'border-red-500' : 'border-gray-200'} bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2`}
                 >
                   <option value="">Sélectionnez le type de projet</option>
-                  <option value="web-development">Développement Web</option>
-                  <option value="mobile-app">Application Mobile</option>
-                  <option value="e-commerce">E-commerce</option>
-                  <option value="branding">Branding</option>
-                  <option value="other">Autre</option>
+                  <option value="creation-video">Création vidéo</option>
+                  <option value="creation-identite">Création d'identité</option>
+                  <option value="creation-site-web">Création de site web</option>
+                  <option value="animation-presentation">Animation et présentation</option>
+                  <option value="other">Autre (décrivez votre projet)</option>
                 </select>
+                {errors.projectType && (
+                  <p className="mt-1 text-sm text-red-500">{errors.projectType}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-1">
-                  Budget *
+                  Budget
                 </label>
                 <select
                   id="budget"
                   name="budget"
                   value={formData.budget}
                   onChange={handleChange}
-                  required
-                  className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  className={`w-full rounded-md border ${errors.budget ? 'border-red-500' : 'border-gray-200'} bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2`}
                 >
                   <option value="">Sélectionnez votre budget</option>
-                  <option value="under-10k">Moins de 10 000€</option>
-                  <option value="10k-25k">10 000€ - 25 000€</option>
-                  <option value="25k-50k">25 000€ - 50 000€</option>
-                  <option value="50k-100k">50 000€ - 100 000€</option>
-                  <option value="over-100k">Plus de 100 000€</option>
+                  <option value="under-2k">Moins de 2 000€</option>
+                  <option value="2k-5k">2 000 - 5 000€</option>
+                  <option value="5k-7.5k">5 000€ - 7 500€</option>
+                  <option value="7.5k-10k">7 500€ - 10 000€</option>
+                  <option value="over-10k">Plus de 10 000€</option>
                 </select>
+                {errors.budget && (
+                  <p className="mt-1 text-sm text-red-500">{errors.budget}</p>
+                )}
               </div>
               <div>
                 <label htmlFor="timeline" className="block text-sm font-medium text-gray-700 mb-1">
@@ -230,7 +394,7 @@ export default function ClientForm() {
                   value={formData.timeline}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  className={`w-full rounded-md border ${errors.timeline ? 'border-red-500' : 'border-gray-200'} bg-white px-3 py-2 text-sm ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2`}
                 >
                   <option value="">Sélectionnez le délai</option>
                   <option value="asap">Dès que possible</option>
@@ -239,6 +403,9 @@ export default function ClientForm() {
                   <option value="6-12-months">6-12 mois</option>
                   <option value="flexible">Flexible</option>
                 </select>
+                {errors.timeline && (
+                  <p className="mt-1 text-sm text-red-500">{errors.timeline}</p>
+                )}
               </div>
             </div>
           </section>
@@ -258,21 +425,11 @@ export default function ClientForm() {
                 onChange={handleChange}
                 required
                 placeholder="Décrivez votre projet en détail..."
-                className="min-h-[120px]"
+                className={`min-h-[120px] ${errors.description ? 'border-red-500' : ''}`}
               />
-            </div>
-            <div>
-              <label htmlFor="requirements" className="block text-sm font-medium text-gray-700 mb-1">
-                Exigences spécifiques
-              </label>
-              <Textarea
-                id="requirements"
-                name="requirements"
-                value={formData.requirements}
-                onChange={handleChange}
-                placeholder="Listez les exigences ou fonctionnalités spécifiques..."
-                className="min-h-[120px]"
-              />
+              {errors.description && (
+                <p className="mt-1 text-sm text-red-500">{errors.description}</p>
+              )}
             </div>
             <div>
               <label htmlFor="additionalInfo" className="block text-sm font-medium text-gray-700 mb-1">
@@ -295,10 +452,10 @@ export default function ClientForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mx-auto">
       <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900">Formulaire de Contact</h2>
-        
+        <h2 className="text-3xl font-bold mb-6 text-gray-900">Prendre Contact</h2>
+        <p className="text-sm text-gray-500 mb-12 max-w-sm">Remplissez ce formulaire pour nous présenter votre projet. Nous vous recontacterons dans les plus brefs délais pour organiser un appel.</p>
         {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex justify-between items-center">
@@ -326,22 +483,18 @@ export default function ClientForm() {
             </div>
           </div>
         </div>
-        
         {submitStatus === 'success' && (
           <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg">
             Merci pour votre message ! Nous vous recontacterons dans les plus brefs délais.
           </div>
         )}
-        
         {submitStatus === 'error' && (
           <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg">
-            Une erreur est survenue lors de l&apos;envoi du formulaire. Veuillez réessayer.
+            Une erreur est survenue l&apos;envoi du formulaire. Veuillez réessayer.
           </div>
         )}
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {renderStep()}
-
           <div className="flex justify-between pt-6">
             {currentStep > 1 && (
               <Button
@@ -381,4 +534,4 @@ export default function ClientForm() {
       </div>
     </div>
   );
-} 
+}

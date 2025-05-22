@@ -1,23 +1,12 @@
 'use client';
 import UnicornStudioBackground from "@/components/UnicornStudioBackground";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import services from "@/data/services.json";
-import { useRef, useEffect } from 'react';
-import { animateHeroTitle } from '@/lib/animations';
 
 export default function Home() {
-  const h1Ref = useRef<HTMLHeadingElement>(null);
-  
-
-  useEffect(() => {
-    if (!h1Ref.current) return;
-    const words = h1Ref.current.querySelectorAll('.hero-word') as NodeListOf<HTMLElement>;
-    animateHeroTitle(words);
-  }, []);
-
   return (
     <>
       <div className="min-h-screen relative flex items-center bg-black-900">
@@ -28,7 +17,7 @@ export default function Home() {
               <div className="text-white text-lg font-light">Ne faites
                 <span className="text-orange-500">.com</span> tout le monde
               </div>
-              <h1 ref={h1Ref} className="text-4xl md:text-5xl font-bold italic text-white leading-[100%]">
+              <h1 className="text-4xl md:text-5xl font-bold italic text-white leading-[100%]">
                 <span className="font-medium hero-word">Votre</span> <span className="hero-word">présence</span> <span className="hero-word">en</span> <span className="hero-word">ligne</span><br />
                 <span className="font-medium hero-word">sur</span> <span className="font-medium hero-word">mesure</span>
               </h1>
@@ -38,11 +27,8 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4 items-center">
                 <Link href="/contact">
                   <Button size="lg" variant="orange">
-                    Réserver un appel <Phone className="w-5 h-5 ml-2" />
+                    Nous contacter <Phone className="w-5 h-5 ml-2" />
                   </Button>
-                </Link>
-                <Link href="/contact" className="flex items-center gap-2 text-base font-bold text-white no-underline">
-                  Nous contacter <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </div>
             </div>
