@@ -52,7 +52,7 @@ const validateForm = (formData: FormData): FormErrors => {
   const errors: FormErrors = {};
 
   if (!formData.companyName.trim()) {
-    errors.companyName = 'Le nom de l\'entreprise est requis';
+    errors.companyName = 'Le nom de l&apos;entreprise est requis';
   }
 
   if (!formData.contactName.trim()) {
@@ -60,9 +60,9 @@ const validateForm = (formData: FormData): FormErrors => {
   }
 
   if (!formData.email.trim()) {
-    errors.email = 'L\'email est requis';
+    errors.email = 'L&apos;email est requis';
   } else if (!validateEmail(formData.email)) {
-    errors.email = 'Format d\'email invalide';
+    errors.email = 'Format d&apos;email invalide';
   }
 
   if (formData.phone && !validatePhone(formData.phone)) {
@@ -70,7 +70,7 @@ const validateForm = (formData: FormData): FormErrors => {
   }
 
   if (formData.website && !validateWebsite(formData.website)) {
-    errors.website = 'Format d\'URL invalide';
+    errors.website = 'Format d&apos;URL invalide';
   }
 
   if (!formData.projectType) {
@@ -139,11 +139,11 @@ export default function ClientForm() {
     switch (step) {
       case 1:
         if (!formData.companyName.trim()) {
-          stepErrors.companyName = 'Le nom de l\'entreprise est requis';
+          stepErrors.companyName = 'Le nom de l&apos;entreprise est requis';
           isValid = false;
         }
         if (formData.website && !validateWebsite(formData.website)) {
-          stepErrors.website = 'Format d\'URL invalide';
+          stepErrors.website = 'Format d&apos;URL invalide';
           isValid = false;
         }
         break;
@@ -153,10 +153,10 @@ export default function ClientForm() {
           isValid = false;
         }
         if (!formData.email.trim()) {
-          stepErrors.email = 'L\'email est requis';
+          stepErrors.email = 'L&apos;email est requis';
           isValid = false;
         } else if (!validateEmail(formData.email)) {
-          stepErrors.email = 'Format d\'email invalide';
+          stepErrors.email = 'Format d&apos;email invalide';
           isValid = false;
         }
         if (formData.phone && !validatePhone(formData.phone)) {
