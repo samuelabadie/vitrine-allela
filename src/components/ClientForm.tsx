@@ -102,7 +102,7 @@ const initialFormData: FormData = {
 };
 
 const steps = [
-  { id: 1, title: 'Informations de l\'entreprise' },
+  { id: 1, title: 'Informations de l&apos;entreprise' },
   { id: 2, title: 'Informations de contact' },
   { id: 3, title: 'Détails du projet' },
   { id: 4, title: 'Description du projet' },
@@ -235,7 +235,7 @@ export default function ClientForm() {
       case 1:
         return (
           <section className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-800">Informations de l'entreprise</h3>
+            <h3 className="text-xl font-semibold text-gray-800">Informations de l&apos;entreprise</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="companyName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -454,7 +454,7 @@ export default function ClientForm() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="bg-white rounded-2xl shadow-lg p-8">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900">Prendre Contact</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900">Formulaire de Contact (optionnel)</h2>
         <p className="text-sm text-gray-500 mb-12 max-w-sm">Remplissez ce formulaire pour nous présenter votre projet. Nous vous recontacterons dans les plus brefs délais pour organiser un appel.</p>
         {/* Progress Steps */}
         <div className="mb-8">
@@ -490,7 +490,7 @@ export default function ClientForm() {
         )}
         {submitStatus === 'error' && (
           <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-lg">
-            Une erreur est survenue l&apos;envoi du formulaire. Veuillez réessayer.
+            Une erreur est survenue lors de l&apos;envoi du formulaire. Veuillez réessayer.
           </div>
         )}
         <form onSubmit={handleSubmit} className="space-y-6">
