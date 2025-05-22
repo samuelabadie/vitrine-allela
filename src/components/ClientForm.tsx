@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client';
 
 import { useState } from 'react';
@@ -353,7 +354,7 @@ export default function ClientForm() {
                 >
                   <option value="">Sélectionnez le type de projet</option>
                   <option value="creation-video">Création vidéo</option>
-                  <option value="creation-identite">Création d'identité</option>
+                  <option value="creation-identite">Création d&apos;identité</option>
                   <option value="creation-site-web">Création de site web</option>
                   <option value="animation-presentation">Animation et présentation</option>
                   <option value="other">Autre (décrivez votre projet)</option>
