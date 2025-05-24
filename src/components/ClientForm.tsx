@@ -189,8 +189,11 @@ export default function ClientForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    console.log('Starting form submission with data:', formData);
+    
     const formErrors = validateForm(formData);
     if (Object.keys(formErrors).length > 0) {
+      console.log('Form validation errors:', formErrors);
       setErrors(formErrors);
       return;
     }
@@ -199,6 +202,7 @@ export default function ClientForm() {
     setSubmitStatus('idle');
 
     try {
+      console.log('Sending request to /api/submit-form...');
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
@@ -207,13 +211,23 @@ export default function ClientForm() {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error('Échec de la soumission');
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Error response data:', errorData);
+        throw new Error(errorData.error || 'Échec de la soumission');
+      }
+      
+      const successData = await response.json();
+      console.log('Success response data:', successData);
       
       setSubmitStatus('success');
       setFormData(initialFormData);
       setErrors({});
     } catch (error) {
-      console.error('Erreur lors de la soumission du formulaire:', error);
+      console.error('Form submission error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
