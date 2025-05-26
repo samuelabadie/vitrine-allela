@@ -5,6 +5,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
 
 interface FormData {
   companyName: string;
@@ -498,8 +499,19 @@ export default function ClientForm() {
           </div>
         </div>
         {submitStatus === 'success' && (
-          <div className="mb-6 p-4 bg-green-50 text-green-700 rounded-lg">
-            Merci pour votre message ! Nous vous recontacterons dans les plus brefs délais.
+          <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
+            <div className="relative bg-white rounded-2xl shadow-xl p-8 max-w-md w-full mx-4">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Message envoyé !</h3>
+                <p className="text-gray-600 mb-8">
+                  Merci pour votre message ! Nous vous recontacterons dans les plus brefs délais.
+                </p>
+                <Link href="/" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full transition-colors duration-200">
+                  Retourner à l&apos;accueil
+                </Link>
+              </div>
+            </div>
           </div>
         )}
         {submitStatus === 'error' && (
