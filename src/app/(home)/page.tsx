@@ -37,11 +37,11 @@ export default function Home() {
       </div>
       {/* Services Section */}
       <section id="services" className="relative bg-white py-32">
-        <div className="container mx-auto">
-          <div className="flex w-full max-w-7xl mx-auto gap-16">
+        <div className="container mx-auto px-10">
+          <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto gap-16">
             {/* Fixed Left Block */}
-            <div className="w-full max-w-md">
-              <div className="sticky top-[140px] flex flex-col gap-6 bg-white rounded-2xl p-8 shadow-md border border-gray-100">
+            <div className="w-full lg:max-w-md">
+              <div className="lg:sticky lg:top-32 flex flex-col gap-6 bg-white rounded-2xl p-8 shadow-md border border-gray-100 z-20">
                 <h2 className="text-4xl font-bold text-black">Nos services</h2>
                 <p className="text-gray-500 text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius elementum tristique. Duis cursus, mi quis viverra ut commodo diam libero vitae erat.</p>
                 <Link href="/contact">

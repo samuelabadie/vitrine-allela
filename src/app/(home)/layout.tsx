@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import NavbarWrapper from "@/components/NavbarWrapper";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Contact - Allela",
-  description: "Contactez-nous pour votre projet",
+  title: "Allela - Votre présence en ligne sur mesure",
+  description: "Ne faites.com tout le monde",
 };
 
-export default function ContactLayout({
+export default function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -15,6 +16,7 @@ export default function ContactLayout({
     <>
       <NavbarWrapper />
       {children}
+      <Footer />
     </>
   );
 } 
