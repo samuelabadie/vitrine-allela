@@ -1,13 +1,12 @@
 import ClientForm from '@/components/ClientForm';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default function ContactPage() {
   return (
-    <div className="h-screen w-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-hidden">
-      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="absolute top-8 left-8 text-gray-900 hover:text-orange-500 transition-colors duration-300">
-          Retourner à l'accueil
+    <div className="min-h-screen md:h-screen w-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center overflow-y-auto md:overflow-hidden">
+      <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-0">
+        <Link href="/" className="md:absolute hidden md:block md:mb-0 top-8 md:left-8 text-gray-900 hover:text-orange-500 transition-colors duration-300">
+          Retourner à l&apos;accueil
         </Link>
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900">Le choix du roi</h1>
         <div className="flex flex-col md:flex-row items-center justify-center gap-8">
