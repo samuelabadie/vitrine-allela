@@ -18,11 +18,11 @@ export default function ContactPage() {
             <div className="bg-white rounded-2xl shadow-lg p-8 max-w-sm">
               <h2 className="text-3xl font-bold mb-4 text-gray-900">Réserver un appel</h2>
               <p className="text-sm text-gray-500 mb-8 max-w-sm">Si vous préférez nous expliquer votre projet de vive voix, vous pouvez réserver un appel directement :</p>
-              <a href="https://calendly.com/your-link" target="_blank" rel="noopener noreferrer">
+              <Link href="/contact/meeting">
                 <button className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition-colors duration-200">
                   Réserver un appel
                 </button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>
